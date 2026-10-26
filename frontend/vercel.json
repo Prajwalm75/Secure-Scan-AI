@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm build",
+  "outputDirectory": "dist",
+  "installCommand": "corepack enable && pnpm install --frozen-lockfile"
+}
