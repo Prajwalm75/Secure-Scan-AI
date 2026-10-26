@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      FRONTEND_ORIGIN: http://localhost:3000
+      SECURESCAN_DB_PATH: /app/data/securescan.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - securescan-data:/app/data
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "corepack enable && pnpm install --frozen-lockfile && pnpm --dir frontend dev"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - backend
+volumes:
+  securescan-data:
